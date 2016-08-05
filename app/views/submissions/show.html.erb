@@ -1,0 +1,32 @@
+<h1>Showing Responses for Submission <%= @submission.id %> for Survey:<br>
+<%= @submission.survey.title %>
+</h1> 
+
+  <p>  
+	<table>
+	  <tr>
+		<th>Response ID</th>
+		<th colspan="2"></th>
+		<th>Question</th>
+		<th colspan="2"></th>
+		<th></th>
+		<th colspan="2"></th>
+		<th>Actions</th>
+	  </tr>
+ 
+		<% @submission.responses.each do |response| %>
+			<% if response.question != nil %>
+			<tr>
+			  <td><%= response.id %></td>
+			  <th colspan="2"></th>
+			  <td><%= response.question.title %></td>
+			  <th colspan="2"></th>
+			</tr>
+			<% end %>
+		<% end %>
+	</table>
+  </p>
+
+<%= link_to 'Back', submissions_path %>
+
+ 

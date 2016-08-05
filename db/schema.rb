@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160805162936) do
+ActiveRecord::Schema.define(version: 20160805180119) do
 
   create_table "answers", force: :cascade do |t|
     t.datetime "created_at",  null: false
@@ -38,6 +38,17 @@ ActiveRecord::Schema.define(version: 20160805162936) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.text     "text_response"
+    t.integer  "submission_id"
+    t.integer  "question_id"
+    t.index ["question_id"], name: "index_responses_on_question_id"
+    t.index ["submission_id"], name: "index_responses_on_submission_id"
+  end
+
+  create_table "submissions", force: :cascade do |t|
+    t.integer  "survey_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["survey_id"], name: "index_submissions_on_survey_id"
   end
 
   create_table "surveys", force: :cascade do |t|
