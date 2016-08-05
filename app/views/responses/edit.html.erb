@@ -1,0 +1,44 @@
+<h1>Answering question:<br>
+<%= @response.question.title %>
+</h1> 
+
+<% if @response.question.answer_type == 'text' %>
+	<%= form_for :response, url: response_path(@response), method: :patch do |f| %>
+	 
+		<% if @response.errors.any? %>
+			<div id="error_explanation">
+			  <h2>
+				Something's wrong with this answer submission:
+			  </h2>
+			  <ul>
+				<% @response.errors.full_messages.each do |msg| %>
+				  <li><%= msg %></li>
+				<% end %>
+			  </ul>
+			</div>
+		<% end %>
+	 
+	  <p>
+		<%= f.text_field :text_response %>
+	  </p>
+	 
+	  <p>
+		<%= f.submit %>
+	  </p>
+	 
+	<% end %>
+<% else %>
+	<p>
+	<b>Possible answers:</b>
+	</p>
+	<% @response.question.answers.each do |answer| %>
+		<p>  
+			<%= answer.answer %>
+			<br>
+		</p>
+	<% end %>
+<% end %>
+
+<%= link_to 'Back', @response.submission %>
+
+ 
