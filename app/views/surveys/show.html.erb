@@ -1,0 +1,70 @@
+<h1>Showing Questions for Survey:<br><%= @survey.title %></h1>
+  <p>
+  
+	<table>
+	  <tr>
+		<th>Title</th>
+		<th colspan="2"></th>
+		<th>Answer Type</th>
+		<th colspan="2"></th>
+		<th></th>
+		<th colspan="2"></th>
+		<th>Actions</th>
+	  </tr>
+ 
+		<% @survey.questions.each do |question| %>
+			<% if question.id %>
+			<tr>
+			  <td><%= question.title %></td>
+			  <th colspan="2"></th>
+			  <td><%= question.answer_type.capitalize %></td>
+			  <th colspan="2"></th>
+			  <% if question.answer_type != 'text' %>
+				<td><%= link_to 'Edit Possible Answers', question_path(question) %></td>
+			  <% else %>
+				<td></td>
+			  <% end %>
+			  <th colspan="2"></th>
+			  <td><%= link_to 'Edit Title', edit_question_path(question) %></td>
+			  <th colspan="2"></th>
+			  <td><%= link_to 'Delete Question', question_path(question),
+										method: :delete,
+										data: {confirm: 'This can\'t be undone. You sure?'} %></td>
+			</tr>
+			<% end %>
+		<% end %>
+	</table>
+	
+	<% if @question_form %>
+		 <% if @question_form.errors.any? %>
+			<div id="error_explanation">
+			  <h2>
+				Something's wrong with this question title:
+			  </h2>
+			  <ul>
+				<% @question_form.errors.full_messages.each do |msg| %>
+				  <li><%= msg %></li>
+				<% end %>
+			  </ul>
+			</div>
+		<% end %>
+	<% end %>
+	
+	<h2>Add a Question</h2>
+	<%= form_for([@survey, @survey.questions.build]) do |f| %>
+	  <p>
+		<%= f.label :question_title %><br>
+		<%= f.text_field :title %>
+	  </p>
+	  <p>
+		<%= f.label :answer_type %><br>
+		<%= f.select :answer_type, [['Select an option', 'select'],['Dropdown', 'dropdown'], ['Checkboxes', 'checkboxes'], ['Text', 'text']] %>
+	  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+  </p>
+
+<%= link_to 'Back', surveys_path %>
+ 

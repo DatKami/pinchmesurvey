@@ -1,0 +1,17 @@
+<h1>New Question</h1>
+<%= form_for :question, url: questions_path do |f| %>
+
+  <p>
+    <%= f.label :question_title %><br>
+    <%= f.text_field :title %>
+  </p>
+ 
+  <p>
+    <%= f.label :question_type %><br>
+    <%= f.select :answer_type, [['Select an option', 'select'],['Dropdown', 'dropdown'], ['Checkboxes', 'checkboxes'], ['Text', 'text']] %>
+  </p>
+ 
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

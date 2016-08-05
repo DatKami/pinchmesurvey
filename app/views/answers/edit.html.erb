@@ -1,0 +1,29 @@
+<h1>Editing Answer Title</h1>
+ 
+<%= form_for :answer, url: answer_path(@answer), method: :patch do |f| %>
+ 
+  	<% if @answer.errors.any? %>
+		<div id="error_explanation">
+		  <h2>
+			Something's wrong with this answer text:
+		  </h2>
+		  <ul>
+			<% @answer.errors.full_messages.each do |msg| %>
+			  <li><%= msg %></li>
+			<% end %>
+		  </ul>
+		</div>
+	<% end %>
+ 
+  <p>
+    <%= f.label :answer_text %><br>
+    <%= f.text_field :answer %>
+  </p>
+ 
+  <p>
+    <%= f.submit %>
+  </p>
+ 
+<% end %>
+ 
+<%= link_to 'Back', @answer.question %>

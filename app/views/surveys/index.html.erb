@@ -1,0 +1,26 @@
+<%= link_to 'New Survey', new_survey_path %>
+<br>
+<br>
+<table>
+  <tr>
+    <th>Title</th>
+    <th colspan="2"></th>
+	<th></th>
+	<th colspan="2"></th>
+	<th>Actions</th>
+  </tr>
+ 
+  <% @surveys.each do |survey| %>
+    <tr>
+      <td><%= survey.title %></td>
+	  <th colspan="2"></th>
+      <td><%= link_to 'Edit Questions', survey_path(survey) %></td>
+	  <th colspan="2"></th>
+      <td><%= link_to 'Edit Survey Title', edit_survey_path(survey) %></td>
+	  <th colspan="2"></th>
+	  <td><%= link_to 'Delete Survey', survey_path(survey),
+								method: :delete,
+								data: {confirm: 'This can\'t be undone. You sure?'} %></td>
+    </tr>
+  <% end %>
+</table>

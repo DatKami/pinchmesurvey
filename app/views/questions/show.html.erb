@@ -1,0 +1,64 @@
+<% if @question.answer_type != 'text' %>
+
+	<h1>Showing Possible Answers for Question:<br><%= @question.title %></h1>
+	  <p>
+	  
+		<table>
+		  <tr>
+			<th>Answer Text</th>
+			<th colspan="2"></th>
+			<th></th>
+			<th colspan="2"></th>
+			<th>Actions</th>
+		  </tr>
+	 
+			<% @question.answers.each do |answer| %>
+				<% if answer.id %>
+					<tr>
+					  <td><%= answer.answer %></td>
+					  <th colspan="2"></th>
+					  <td><%= link_to 'Edit Answer Text', edit_answer_path(answer) %></td>
+					  <th colspan="2"></th>
+					  <th></th>
+					  <th colspan="2"></th>
+					  <td><%= link_to 'Delete Answer', answer_path(answer),
+												method: :delete,
+												data: {confirm: 'This can\'t be undone. You sure?'} %></td>
+					</tr>
+				<% end %>
+			<% end %>
+		</table>
+		
+		<% if @answer_form %>
+			 <% if @answer_form.errors.any? %>
+				<div id="error_explanation">
+				  <h2>
+					Something's wrong with this answer text:
+				  </h2>
+				  <ul>
+					<% @answer_form.errors.full_messages.each do |msg| %>
+					  <li><%= msg %></li>
+					<% end %>
+				  </ul>
+				</div>
+			<% end %>
+		<% end %>
+		
+		<h2>Add an Answer</h2>
+		<%= form_for([@question, @question.answers.build]) do |f| %>
+		  <p>
+			<%= f.label :answer_text %><br>
+			<%= f.text_field :answer %>
+		  </p>
+	  <p>
+		<%= f.submit %>
+	  </p>
+	<% end %>
+	</p>
+<% else %>
+	A question with the type "Text" does not have any answer options.
+	<br>
+	<br>
+<% end %>
+<%= link_to 'Back', @question.survey %>
+ 

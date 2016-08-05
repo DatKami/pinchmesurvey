@@ -1,0 +1,29 @@
+<h1>Editing Survey Title</h1>
+ 
+<%= form_for :survey, url: survey_path(@survey), method: :patch do |f| %>
+ 
+  	<% if @survey.errors.any? %>
+		<div id="error_explanation">
+		  <h2>
+			Something's wrong with this survey title.:
+		  </h2>
+		  <ul>
+			<% @survey.errors.full_messages.each do |msg| %>
+			  <li><%= msg %></li>
+			<% end %>
+		  </ul>
+		</div>
+	<% end %>
+ 
+  <p>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </p>
+ 
+  <p>
+    <%= f.submit %>
+  </p>
+ 
+<% end %>
+ 
+<%= link_to 'Back', surveys_path %>
