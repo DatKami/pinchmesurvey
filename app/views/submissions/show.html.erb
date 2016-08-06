@@ -3,37 +3,49 @@
 </h1> 
 
   <p>  
-	<table>
-	  <tr>
-		<th>Question</th>
-		<th colspan="2"></th>
-		<th>Response</th>
-		<th colspan="2"></th>
-		<th></th>
-	  </tr>
+  <table>
+    <tr>
+    <th>Question</th>
+    <th colspan="2"></th>
+    <th>Response</th>
+    <th colspan="2"></th>
+    <th></th>
+    </tr>
  
-		<% @submission.responses.each do |response| %>
-			<% if response.question != nil %>
-			<tr>
-			  <td><%= response.question.title %></td>
-			  <th colspan="2"></th>
-			  <% if response.question.answer_type == 'text' %>
-			  <td><%= response.text_response %></td>
-			  <% elsif response.question.answer_type == 'dropdown' %>
-			  	<% if response.text_response != nil %>
-			  		<td><%= Answer.find(response.text_response).answer %></td>
-			  	<% else %>
-			  		<td><i>Not answered yet</i></td>
-			  	<% end %>
-			  <% else %>
-			  <td><i>N/A</i></td>
-			  <% end %>
-			  
-			  <td><%= link_to 'Edit Response', edit_response_path(response) %></td>
-			</tr>
-			<% end %>
-		<% end %>
-	</table>
+    <% @submission.responses.each do |response| %>
+      <% if response.question != nil %>
+      <tr>
+        <td><%= response.question.title %></td>
+        <th colspan="2"></th>
+        <td>
+        <% if response.question.answer_type == 'text' %>
+          <%= response.text_response %>
+        <% elsif response.question.answer_type == 'dropdown' %>
+          <% if response.text_response != nil %>
+            <%= Answer.find(response.text_response).answer %>
+          <% else %>
+            <i>Not answered yet</i>
+          <% end %>
+        <% elsif response.question.answer_type == 'checkboxes' %>
+          <% if response.answers.count == 0 %>
+            <i>None</i>
+          <% elsif response.answers.count > 3 %>
+              <% for answer in response.answers.limit(3) %>
+                <%= answer.answer %>, 
+              <% end %>
+              ...
+          <% else %>
+              <% for answer in response.answers %>
+                <%= answer.answer %>, 
+              <% end %>
+          <% end %>
+        <% end %>
+        </td>        
+        <td><%= link_to 'Edit Response', edit_response_path(response) %></td>
+      </tr>
+      <% end %>
+    <% end %>
+  </table>
   </p>
 
 <%= link_to 'Back', submissions_path %>
