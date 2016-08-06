@@ -27,13 +27,18 @@
 	  </p>
 	 
 	<% end %>
+<% elsif @response.question.answer_type == 'dropdown' %>
+	<%= form_for @response, url: {action: "update"} do |f| %>
+		<%= collection_select(:response, :text_response, @response.question.answers, :id, :answer) %>
+		<%= f.submit %>
+	<% end %>
 <% else %>
 	<p>
 	<b>Possible answers:</b>
 	</p>
 	<% @response.question.answers.each do |answer| %>
 		<p>  
-			<%= answer.answer %>
+			<%= answer.id %>:<b><%= answer.answer %></b>
 			<br>
 		</p>
 	<% end %>

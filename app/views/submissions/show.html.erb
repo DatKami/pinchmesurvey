@@ -7,7 +7,7 @@
 	  <tr>
 		<th>Question</th>
 		<th colspan="2"></th>
-		<th>Text Response</th>
+		<th>Response</th>
 		<th colspan="2"></th>
 		<th></th>
 	  </tr>
@@ -17,10 +17,12 @@
 			<tr>
 			  <td><%= response.question.title %></td>
 			  <th colspan="2"></th>
-			  <% if response.question.answer_type = 'text' %>
+			  <% if response.question.answer_type == 'text' %>
 			  <td><%= response.text_response %></td>
+			  <% elsif response.question.answer_type == 'dropdown' %>
+			  <td><%= Answer.find(response.text_response).answer %></td>
 			  <% else %>
-			  <td></td>
+			  <td>N/A</td>
 			  <% end %>
 			  
 			  <td><%= link_to 'Edit Response', edit_response_path(response) %></td>
