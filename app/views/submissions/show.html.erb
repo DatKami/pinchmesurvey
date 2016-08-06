@@ -20,9 +20,13 @@
 			  <% if response.question.answer_type == 'text' %>
 			  <td><%= response.text_response %></td>
 			  <% elsif response.question.answer_type == 'dropdown' %>
-			  <td><%= Answer.find(response.text_response).answer %></td>
+			  	<% if response.text_response != nil %>
+			  		<td><%= Answer.find(response.text_response).answer %></td>
+			  	<% else %>
+			  		<td><i>Not answered yet</i></td>
+			  	<% end %>
 			  <% else %>
-			  <td>N/A</td>
+			  <td><i>N/A</i></td>
 			  <% end %>
 			  
 			  <td><%= link_to 'Edit Response', edit_response_path(response) %></td>
