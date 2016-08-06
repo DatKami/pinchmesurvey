@@ -32,15 +32,19 @@
 		<%= collection_select(:response, :text_response, @response.question.answers, :id, :answer) %>
 		<%= f.submit %>
 	<% end %>
-<% else %>
-	<p>
-	<b>Possible answers:</b>
-	</p>
-	<% @response.question.answers.each do |answer| %>
-		<p>  
-			<%= answer.id %>:<b><%= answer.answer %></b>
-			<br>
+<% elsif @response.question.answer_type == 'checkboxes' %>
+	<b>Select all that apply:</b>
+	<%= form_for @response, url: {action: "update"} do |f| %>
+		<%= f.hidden_field :text_response %>
+		<% for answer in @response.question.answers %>
+		<p>
+			<%= check_box_tag "response[answer_ids][]", answer.id, @response.answers.include?(answer) %>
+			<%= answer.answer %>
 		</p>
+		<% end %>
+		<p>
+			<%= f.submit %>
+	 	</p>
 	<% end %>
 <% end %>
 
