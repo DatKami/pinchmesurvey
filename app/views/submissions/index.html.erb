@@ -1,43 +1,48 @@
-<table>
-  <tr>
-    <th>Title</th>
-    <th colspan="2"></th>
-	<th>Actions</th>
-  </tr>
- 
-  <% @surveys.each do |survey| %>
+<div>
+  <b><h1>Start a new survey:</h1></b>
+  <table>
     <tr>
-      <td><%= survey.title %></td>
-	  <th colspan="2"></th>
-      <td><%= link_to 'Start Survey', new_submission_path(survey_id: survey.id) %></td>
+      <th>Title</th>
+      <th colspan="2"></th>
+  	<th>Actions</th>
     </tr>
-  <% end %>
-</table>
+   
+    <% @surveys.each do |survey| %>
+      <tr>
+        <td><%= survey.title %></td>
+  	  <th colspan="2"></th>
+        <td><%= link_to 'Start Survey', new_submission_path(survey_id: survey.id) %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
 <br>
-<br>
-<table>
-  <tr>
-    <th>Submission ID</th>
-    <th colspan="2"></th>
-	<th>Survey Title</th>
-	<th colspan="2"></th>
-	<th>Actions</th>
-  </tr>
- 
-  <% @submissions.each do |submission| %>
+<div>
+  <b><h1>Current surveys:</h1></b>
+  <table>
     <tr>
-      <td><%= submission.id %></td>
-	  <th colspan="2"></th>
-	  <td><%= submission.survey.title %></td>
-	  <th colspan="2"></th>
-      <td><%= link_to 'View & Edit Responses', submission_path(submission) %></td>
-	  <th colspan="2"></th>
-	  <td><%= link_to 'Delete Submission', submission_path(submission),
-								method: :delete,
-								data: {confirm: 'This can\'t be undone. You sure?'} %></td>
+      <th>Submission ID</th>
+      <th colspan="2"></th>
+  	<th>Survey Title</th>
+  	<th colspan="2"></th>
+  	<th>Actions</th>
     </tr>
-  <% end %>
-</table>
+   
+    <% @submissions.each do |submission| %>
+      <tr>
+        <td><%= submission.id %></td>
+  	  <th colspan="2"></th>
+  	  <td><%= submission.survey.title %></td>
+  	  <th colspan="2"></th>
+        <td><%= link_to 'View & Edit Responses', submission_path(submission) %></td>
+  	  <th colspan="2"></th>
+  	  <td><%= link_to 'Delete Submission', submission_path(submission),
+  								method: :delete,
+  								data: {confirm: 'This can\'t be undone. You sure?'} %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
 <br>
 
 <%= link_to 'Back', surveys_path %>

@@ -9,7 +9,6 @@
     <th colspan="2"></th>
     <th>Response</th>
     <th colspan="2"></th>
-    <th></th>
     </tr>
  
     <% @submission.responses.includes(:question).joins(:question).order("questions.arbitrary_sort ASC").each do |response| %>
@@ -19,7 +18,11 @@
         <th colspan="2"></th>
         <td>
         <% if response.question.answer_type == 'text' %>
-          <%= response.text_response %>
+          <% if response.text_response != nil %>
+            <%= response.text_response %>
+          <% else %>
+            <i>Not answered yet</i>
+          <% end %>
         <% elsif response.question.answer_type == 'dropdown' %>
           <% if response.text_response != nil %>
             <%= Answer.find(response.text_response).answer %>
@@ -28,7 +31,7 @@
           <% end %>
         <% elsif response.question.answer_type == 'checkboxes' %>
           <% if response.answers.count == 0 %>
-            <i>None</i>
+            <i>No boxes selected</i>
           <% elsif response.answers.count > 3 %>
               <% for answer in response.answers.limit(3) %>
                 <%= answer.answer %>, 
@@ -41,13 +44,22 @@
           <% end %>
         <% end %>
         </td>        
-        <td><%= link_to 'Edit Response', edit_response_path(response) %></td>
+        <td>
+          <% if response.question.answers.count > 0 || response.question.answer_type == 'text' %>
+            <%= link_to 'Edit Response', edit_response_path(response) %>
+          <% else %>
+            <i>Unanswerable</i>
+          <% end %>
+        </td>
       </tr>
       <% end %>
     <% end %>
   </table>
   </p>
 
+<i>An unanswerable question is a checkbox or dropdown question with no possible answers.</i>
+<br>
+<br>
 <%= link_to 'Back', submissions_path %>
 
  
