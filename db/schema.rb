@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160805180119) do
+ActiveRecord::Schema.define(version: 20160807171150) do
 
   create_table "answers", force: :cascade do |t|
     t.datetime "created_at",  null: false
@@ -28,9 +28,10 @@ ActiveRecord::Schema.define(version: 20160805180119) do
   create_table "questions", force: :cascade do |t|
     t.string   "title"
     t.string   "answer_type"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.integer  "survey_id"
+    t.decimal  "arbitrary_sort"
     t.index ["survey_id"], name: "index_questions_on_survey_id"
   end
 

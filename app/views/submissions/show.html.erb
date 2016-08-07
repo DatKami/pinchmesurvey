@@ -12,7 +12,7 @@
     <th></th>
     </tr>
  
-    <% @submission.responses.each do |response| %>
+    <% @submission.responses.includes(:question).joins(:question).order("questions.arbitrary_sort ASC").each do |response| %>
       <% if response.question != nil %>
       <tr>
         <td><%= response.question.title %></td>

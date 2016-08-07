@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
 	resources :surveys do
-		resources :questions do
-			resources :answers
-		end
+		resources :questions
 	end
 	resources :questions do
+		member do
+			get 'shift_up'
+			get 'shift_down'
+		end
 		resources :answers
+
 	end
 	resources :answers
 	resources :submissions do
